@@ -165,8 +165,14 @@ export default class Version extends Model {
     return null;
   }
 
-  yankTask = keepLatestTask(async () => {
-    let response = await fetch(`/api/v1/crates/${this.crate.id}/${this.num}/yank`, { method: 'DELETE' });
+  yankTask = keepLatestTask(async (yankMessage = '') => {
+    let response = await fetch(`/api/v1/crates/${this.crate.id}/${this.num}/yank`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ yank_message: yankMessage }),
+    });
     if (!response.ok) {
       throw new Error(`Yank request for ${this.crateName} v${this.num} failed`);
     }

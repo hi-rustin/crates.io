@@ -1,0 +1,19 @@
+<div
+  local-class="modal-backdrop"
+  ...attributes
+  {{on "keydown" this.onKeyDown}}
+  role="dialog"
+  aria-modal="true"
+>
+  <div local-class="modal-content">
+    <header local-class="modal-header">
+      <h2>{{@title}}</h2>
+      <button type="button" local-class="close-button" {{on "click" this.closeModal}}>
+        Close
+      </button>
+    </header>
+    <div local-class="modal-body">
+      {{yield}}
+    </div>
+  </div>
+</div>

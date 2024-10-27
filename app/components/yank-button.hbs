@@ -20,7 +20,7 @@
     ...attributes
     data-test-version-yank-button={{@version.num}}
     disabled={{@version.yankTask.isRunning}}
-    {{on "click" (perform @version.yankTask)}}
+    {{on "click" this.openYankModal}}
   >
     {{#if @version.yankTask.isRunning }}
        Yanking...
@@ -28,4 +28,20 @@
        Yank
     {{/if}}
   </button>
+{{/if}}
+
+{{#if this.isYankModalOpen}}
+  <Modal @title="Yank Version" @close={{this.closeYankModal}}>
+    <form {{on "submit" this.submitYank}}>
+      <label for="yank-message">Yank Message (optional):</label>
+      <textarea id="yank-message" {{on "input" this.updateYankMessage}}></textarea>
+      <button type="submit" disabled={{@version.yankTask.isRunning}}>
+        {{#if @version.yankTask.isRunning}}
+          Yanking...
+        {{else}}
+          Confirm Yank
+        {{/if}}
+      </button>
+    </form>
+  </Modal>
 {{/if}}
